@@ -1,8 +1,14 @@
 
-const http = require('http');
+const e = require('express');
+const express = require('express');
 
-const server =  http.createServer((req,res)=>{
-  console.log(" on branch 1  ");
-}).listen(8000,()=>{
-  console.log(" server started at port 8000");
+const app = express();
+
+
+app.use((req,res,next) => {
+  console.log(req.headers);
 });
+
+app.listen(8000,()=>{
+  console.log("server started at port 8000");
+})
