@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-// external module
->>>>>>> branch1
 
 const express = require('express');
 const app = express();
