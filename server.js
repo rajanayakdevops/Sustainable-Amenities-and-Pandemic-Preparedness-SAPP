@@ -9,6 +9,7 @@ const path = require('path');
 
 //local module 
 const rootDir = require("./utils/rootpath");
+const {userRouter} = require("./router/userRouter");
 
 app.use(express.urlencoded());
 
@@ -16,9 +17,6 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname,'public')))
 
 
-app.use((req,res,next) => {
-  console.log(req.headers);
-});
 
 
 
@@ -27,9 +25,8 @@ app.set('view engine','ejs');
 app.set('views','views');
 
 
-app.get("/",(req,res)=>{
-  res.render("home");
-})
+app.use(userRouter);
+
 
 app.use((req,res)=>{
   res.send("<h1> this page does not found <h1>");

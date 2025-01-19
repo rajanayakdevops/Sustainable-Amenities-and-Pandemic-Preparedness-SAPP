@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Login</h2>
+    <form method="post" action="/SAPP">
+      <div class="mb-4">
+        <label for="userid" class="block text-gray-700 font-medium mb-2">User ID</label>
+        <input type="text" id="userid" name="userid" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Your User ID" required>
+      </div>
+      <div class="mb-6">
+        <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+        <input type="password" id="password" name="password" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Your Password" required>
+      </div>
+      <button type="submit" class="w-full bg-blue-500 text-white font-medium py-2 rounded-lg hover:bg-blue-600 transition">Log In</button>
+    </form>
+    <p class="mt-4 text-center text-gray-600">
+      Don't have an account? <a href="/signup" class="text-blue-500 hover:underline">Sign Up</a>
+    </p>
+  </div>
+</body>
+</html>
