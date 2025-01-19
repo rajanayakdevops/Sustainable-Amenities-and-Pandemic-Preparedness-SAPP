@@ -1,0 +1,15 @@
+{
+  "name": "sustainable-amenities-and-pandemic-preparedness-sapp",
+  "version": "1.0.0",
+  "description": ". Sustainable Amenities and Pandemic Preparedness (SAPP)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
