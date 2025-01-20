@@ -46,8 +46,10 @@ exports.handleUserLogin = async (req, res) => {
 exports.getUserProfile = (req, res) => {
   if (req.session.userId) {
     
+    
     User.findById(req.session.userId)
       .then(user => {
+        
         if (!user) {
           return res.redirect('/login');  
         }
@@ -60,6 +62,7 @@ exports.getUserProfile = (req, res) => {
         res.status(500).send('Error fetching user data');
       });
   } else {
+    console.log("No user in session");
     // User is not logged in
     res.redirect('/login');
   }
@@ -68,6 +71,7 @@ exports.getUserProfile = (req, res) => {
 exports.handleFormRequest = async (req, res) => {
   try {
     if (!req.session.userId) {
+      console.log("session not found ");
       // If no session exists, redirect to login
       return res.redirect('/login');
     }
@@ -78,6 +82,7 @@ exports.handleFormRequest = async (req, res) => {
     const user = await User.findById(userId).select('+firstLogin +isFormFilled');
 
     if (!user) {
+      
       return res.redirect('/login'); // If user not found, redirect to login
     }
 
@@ -86,8 +91,9 @@ exports.handleFormRequest = async (req, res) => {
       return res.render("formData"); // Render the form page
     }
 
+    
     // Redirect to dashboard if the user doesn't need to fill the form
-    res.redirect("/")
+    res.redirect(`/dashboard?riskCategory=${user.riskCategory}`)
   } catch (error) {
     console.error('Error handling form request:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -145,8 +151,15 @@ exports.handleRiskFormSubmission = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Respond with the user's risk category
-    res.status(200).redirect("/dashboard");
+    // Extract the user's riskCategory from the database
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Redirect to /dashboard with the user's riskCategory as a query parameter
+    res.status(200).redirect(`/dashboard?riskCategory=${user.riskCategory}`);
+
   } catch (error) {
     console.error('Error processing form submission:', error);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -154,7 +167,9 @@ exports.handleRiskFormSubmission = async (req, res) => {
 };
 
 exports.updateUserDashboard = (req,res) =>{
-  const riskCategory = req.params.riskCategory;
+  const { riskCategory } = req.query;
+  return res.render("highrisk");
+
 }
 
 

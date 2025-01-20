@@ -20,7 +20,8 @@ userRouter.get('/login',(req,res)=>{
 
 userRouter.get('/showForm',userController.handleFormRequest);
 userRouter.get('/profile',userController.getUserProfile);
-userRouter.get('/dashboard/:riskCategory',userController.updateUserDashboard);
+userRouter.get('/dashboard',userController.updateUserDashboard);
+
 
 ////  post 
 

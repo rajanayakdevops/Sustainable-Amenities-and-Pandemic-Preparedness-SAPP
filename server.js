@@ -16,7 +16,9 @@ const {userRouter} = require("./router/userRouter");
 app.use(express.urlencoded());
 
 // this is middleware that make this path public or accessable to all 
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'views')));
+
 
 
 // Session configuration
