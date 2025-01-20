@@ -45,15 +45,15 @@ exports.handleUserLogin = async (req, res) => {
 
 exports.getUserProfile = (req, res) => {
   if (req.session.userId) {
-    // User is logged in, fetch user data from the database
+    
     User.findById(req.session.userId)
       .then(user => {
         if (!user) {
-          return res.redirect('/login');  // User not found, redirect to login page
+          return res.redirect('/login');  
         }
 
-        // Render the profile page with user data
-        res.render('profile', { user });  // 'profile' is the EJS view, and 'user' is the data passed to it
+        
+        res.redirect("/showForm");  
       })
       .catch(err => {
         console.error(err);
@@ -64,3 +64,97 @@ exports.getUserProfile = (req, res) => {
     res.redirect('/login');
   }
 }
+
+exports.handleFormRequest = async (req, res) => {
+  try {
+    if (!req.session.userId) {
+      // If no session exists, redirect to login
+      return res.redirect('/login');
+    }
+
+    const userId = req.session.userId; // Retrieve the user ID from the session
+
+    // Fetch the user's record from the database, including hidden fields
+    const user = await User.findById(userId).select('+firstLogin +isFormFilled');
+
+    if (!user) {
+      return res.redirect('/login'); // If user not found, redirect to login
+    }
+
+    // Check if the user is eligible to fill the form
+    if (user.firstLogin && !user.isFormFilled) {
+      return res.render("formData"); // Render the form page
+    }
+
+    // Redirect to dashboard if the user doesn't need to fill the form
+    res.redirect("/")
+  } catch (error) {
+    console.error('Error handling form request:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.handleRiskFormSubmission = async (req, res) => {
+  try {
+    // Weights for each question
+    const weights = {
+      question1: 3, // Symptoms in the past 7 days
+      question2: 2, // High-risk age group
+      question3: 2, // Underlying health conditions
+      question4: 3, // Contact with a diagnosed person
+      question5: 3, // Travel to a hotspot region
+    };
+
+    // Extract form data from the request body
+    const formData = req.body;
+
+    // Calculate total score
+    let totalScore = 0;
+    for (const question in formData) {
+      if (formData[question] === "Yes") {
+        totalScore += weights[question];
+      }
+    }
+
+    // Categorize risk based on total score
+    let riskCategory;
+    if (totalScore >= 7) {
+      riskCategory = 3; // High Risk
+    } else if (totalScore >= 3) {
+      riskCategory = 2; // Medium Risk
+    } else {
+      riskCategory = 1; // No Risk
+    }
+
+    // Get the user ID from the session
+    const userId = req.session.userId;
+
+    // Update the user's data in the database
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        riskCategory: riskCategory,   // 1, 2, or 3 based on risk level
+        isFormFilled: true,           // Mark the form as filled
+        firstLogin: false,            // Mark first login as false
+      },
+      { new: true }  // Return the updated user
+    );
+
+    // Check if the user exists in the database
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Respond with the user's risk category
+    res.status(200).redirect("/dashboard");
+  } catch (error) {
+    console.error('Error processing form submission:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+exports.updateUserDashboard = (req,res) =>{
+  const riskCategory = req.params.riskCategory;
+}
+
+

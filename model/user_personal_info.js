@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
   aadhaar: { type: String, required: true },
   userid: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  firstLogin: {type: Boolean, default: true, select:false},
+  isFormFilled: {type: Boolean, default: false, select:false},
+  riskCategory: { type: Number, enum: [1, 2, 3], default: 1 },
 });
 
 // Create and export the User model

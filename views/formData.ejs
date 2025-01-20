@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMVP Virus Risk Classification Form</title>
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Tailwind CSS CDN -->
+  <style>
+    body {
+      background-color: #f7fafc;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: linear-gradient(to right, #4A90E2, #9013FE);
+      color: white;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+      padding: 20px 0;
+    }
+    .footer {
+      background: #4A90E2;
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    .form-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 120px; /* Ensure form is below the fixed header */
+      padding-bottom: 60px; /* Space for fixed footer */
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
+    .form-content {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <!-- Header Section -->
+  <div class="header">
+    <div class="container mx-auto text-center">
+      <h1 class="text-3xl font-bold">Stay Safe, Stay Healthy</h1>
+      <p class="mt-2 text-lg">Assess your risk for HMVP virus and take necessary precautions.</p>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-container">
+    <div class="form-content">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">HMVP Virus Risk Classification</h2>
+
+      <form action="/submit-risk-form" method="POST">
+        <!-- Question 1 -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="question1">1. Have you experienced symptoms like fever, cough, or fatigue in the past 7 days?</label>
+          <div class="space-x-4">
+            <label class="inline-flex items-center">
+              <input type="radio" name="question1" value="Yes" class="form-radio text-blue-500" required>
+              <span class="ml-2">Yes</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="question1" value="No" class="form-radio text-blue-500" required>
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="question2">2. Are you in a high-risk age group (above 65 years)?</label>
+          <div class="space-x-4">
+            <label class="inline-flex items-center">
+              <input type="radio" name="question2" value="Yes" class="form-radio text-blue-500" required>
+              <span class="ml-2">Yes</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="question2" value="No" class="form-radio text-blue-500" required>
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="question3">3. Do you have any underlying health conditions (e.g., respiratory diseases)?</label>
+          <div class="space-x-4">
+            <label class="inline-flex items-center">
+              <input type="radio" name="question3" value="Yes" class="form-radio text-blue-500" required>
+              <span class="ml-2">Yes</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="question3" value="No" class="form-radio text-blue-500" required>
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="question4">4. Have you had contact with someone diagnosed with HMVP virus recently?</label>
+          <div class="space-x-4">
+            <label class="inline-flex items-center">
+              <input type="radio" name="question4" value="Yes" class="form-radio text-blue-500" required>
+              <span class="ml-2">Yes</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="question4" value="No" class="form-radio text-blue-500" required>
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="question5">5. Have you traveled to a hotspot region in the past 14 days?</label>
+          <div class="space-x-4">
+            <label class="inline-flex items-center">
+              <input type="radio" name="question5" value="Yes" class="form-radio text-blue-500" required>
+              <span class="ml-2">Yes</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="question5" value="No" class="form-radio text-blue-500" required>
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+        </div>
+
+        
+        <!-- Additional Questions and Submit Button -->
+        <div class="mt-6">
+          <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer py-6 mt-6">
+    <div class="container mx-auto text-center">
+      <p class="text-sm">Your health is our priority. Please follow the guidelines to stay safe.</p>
+      <p class="text-sm">For more information, visit our <a href="#" class="underline">website</a>.</p>
+    </div>
+  </div>
+
+  
+
+</body>
+</html>
