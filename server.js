@@ -2,6 +2,8 @@
 
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
+const session = require('express-session');
 
 
 //core Module
@@ -17,7 +19,12 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname,'public')))
 
 
-
+// Session configuration
+app.use(session({
+  secret: 'mySuperSecretKey123!',  // Secret key for signing session ID
+  resave: false,              // Don't save session if not modified
+  saveUninitialized: true,    // Save session if it's new (even if unmodified)
+}));
 
 
 //setting ejs 
@@ -31,6 +38,22 @@ app.use(userRouter);
 app.use((req,res)=>{
   res.send("<h1> this page does not found <h1>");
 })
+
+
+
+
+
+const mongoURI = 'mongodb://127.0.0.1:27017/SAAP?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.6';
+
+
+// Connect to MongoDB
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('MongoDB connected successfully to SAAP database!'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
 
 
 app.listen(8000,()=>{
