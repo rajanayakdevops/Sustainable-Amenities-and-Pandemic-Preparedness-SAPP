@@ -1,18 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('./partials/links') %>
-        <style>
-        header {
-    background-color: yellow;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Dashboard UI</title>
+  <link rel="stylesheet" href="medium.css">
 </head>
 <body>
-  <%- include('./partials/main') %>
+  <nav class="navbar">
+    <h1>Dashboard UI</h1>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <div class="nav-links">
+      <a href="#"><span class="icon">🏠</span>Home</a>
+      <a href="#notification"><span class="icon">🔔</span>Notifications</a>
+      <a href="#real"><span class="icon">📊</span>Real-Time Analytics</a>
+      <a href="#Emergency"><span class="icon">🚨</span>Emergency Assistance</a>
+    </div>
+    <div class="menu" id="mobileMenu">
+      <a href="#home"><span class="icon">🏠</span>Home</a>
+      <a href="#notification"><span class="icon">🔔</span>Notifications</a>
+      <a href="#real"><span class="icon">📊</span>Real-Time Analytics</a>
+      <a href="#Emergency"><span class="icon">🚨</span>Emergency Assistance</a>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section class="image-section" style="">
+    <div class="overlay">
+        <h1>You are in safe Join</h1>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h2>Our Features</h2>
+    <div class="feature-cards">
+      <div class="card">
+        <img src="https://img.icons8.com/fluency/48/combo-chart.png" alt="Analytics Icon">
+        <h3>Real-Time Analytics</h3>
+        <p>Monitor health trends and assess risks in real-time with advanced analytics tools.</p>
+        <a href="#" class="btn">Find</a>
+      </div>
+      <div class="card">
+        <img src="https://img.icons8.com/fluency/48/delivery.png" alt="Delivery Icon">
+        <h3>Supply Delivery Requests</h3>
+        <p>Easily request deliveries for food, medicine, and hygiene kits directly from our platform.</p>
+        <a href="./WasteDisposal/wasteDisposal/index.html" class="btn">Request</a>
+      </div>
+      <div class="card">
+        <img src="https://tse1.mm.bing.net/th?id=OIP.SjiYIXNTjzRvNOs0qu8HwgHaHa&pid=Api&P=0&h=180" alt="Emergency Icon" style="height: 35px; width: 34px">
+            <h3>Emergency Assistance</h3>
+            <p>Get immediate help in case of emergencies with our 24/7 assistance feature.</p>
+        <a href="/add-medical-center" class="btn"  onclick="">click</a>
+      </div>
+      <div class="card">
+        <img src="https://tse3.mm.bing.net/th?id=OIP.BRANqcC98rQ-nxIeq0hprAHaHZ&pid=Api&P=0&h=180" alt="Analytics Icon" style="height: 35px; width: 34px">
+        <h3>Nearest medical-shop</h3>
+        <p>Prescription medications
+            , Health and wellness products
+            , Home medical supplies
+           ,  Health screenings (CVS)
+            </p>
+        <a href="/show-medical-center" class="btn" onclick="navigateToMedicalShop()">Find</a>
+      </div>
+      <div class="card">
+        <img src="https://media.istockphoto.com/id/1152189152/vector/red-alert-icon.jpg?s=612x612&w=0&k=20&c=Kw_-i314F4cxgn2hmakp-88-O45FSx62c6r-OzKYMw4=" alt="Analytics Icon" style="height: 35px; width: 34px">
+        <h3>Share Data with Govt. </h3>
+        <p>Share only if you have tested positive for covid 19.</p>
+        <a href="#" class="btn">Find</a>
+      </div>
+    </div>
+  </section>
+  
+  <hr>
+  <!-- Footer Section -->
+  <footer style="background-color: #f8f9fa; padding: 20px; text-align: center; font-family: 'Poppins', sans-serif;">
+    <div class="footer-container" style="max-width: 1200px; margin: auto;">
+        <div class="social-media" style="margin-bottom: 15px;">
+            <a href="https://www.facebook.com" target="_blank" style="margin: 0 10px; text-decoration: none; color: #3b5998;">Facebook</a>
+            <a href="https://www.twitter.com" target="_blank" style="margin: 0 10px; text-decoration: none; color: #1DA1F2;">Twitter</a>
+            <a href="https://www.instagram.com" target="_blank" style="margin: 0 10px; text-decoration: none; color: #C13584;">Instagram</a>
+            <a href="https://www.linkedin.com" target="_blank" style="margin: 0 10px; text-decoration: none; color: #0077b5;">LinkedIn</a>
+        </div>
+        <div class="pages-links" style="margin-bottom: 15px;">
+            <a href="index.html" style="margin: 0 10px; text-decoration: none; color: #007bff;">Home</a>
+            <a href="about.html" style="margin: 0 10px; text-decoration: none; color: #007bff;">About Us</a>
+            <a href="services.html" style="margin: 0 10px; text-decoration: none; color: #007bff;">Services</a>
+            <a href="contact.html" style="margin: 0 10px; text-decoration: none; color: #007bff;">Contact</a>
+        </div>
+        <div class="office-address" style="font-size: 14px; color: #6c757d;">
+            <p>Green City, MUMBAI 401208</p>
+            <p>Email: info@wastexpert.com | Phone: (980) 456-7890</p>
+        </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot Button -->
+   <!-- Chatbot Button -->
+   <button class="chatbot-button" onclick="toggleChatbotModal()">🤖</button>
+
+   <!-- Chatbot Modal -->
+   <div class="chatbot-modal" id="chatbotModal">
+     <header>Chatbot</header>
+     <div class="chat-content" id="chatContent">
+       <p>Welcome to the chatbot! How can I assist you?</p>
+     </div>
+     <div class="chat-input">
+       <input type="text" id="chatInput" placeholder="Type a message...">
+       <button onclick="sendMessage()">Send</button>
+     </div>
+   </div>
+     <script src="/js/scrift.js"></script>
 </body>
-    <script type="module" src="js.js"></script>
 </html>

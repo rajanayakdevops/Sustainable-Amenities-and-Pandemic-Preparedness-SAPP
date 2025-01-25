@@ -1,21 +1,53 @@
 const User = require('../model/user_personal_info');
+const City = require('../model/medical-center');
+const nodemailer = require("nodemailer");
 
-exports.postSaveUserInfo =  async (req,res)=>{
-
-  const { name, phone, email, aadhaar, userid, password } = req.body;
+exports.postSaveUserInfo = async (req, res) => {
+  const { name, phone, email, aadhaar, userid, password, city, state } = req.body;
 
   try {
-    // Save the user data to the database
-    const newUser = new User({ name, phone, email, aadhaar, userid, password });
+    // Save the user data to the database including city and state
+    const newUser = new User({
+      name,
+      phone,
+      email,
+      aadhaar,
+      userid,
+      password,
+      city,   // Add city
+      state,  // Add state
+    });
+    
     await newUser.save();
 
+    // Send confirmation email
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: "www.btsmemberkim@gmail.com", // Your Gmail ID
+        pass: "uoat davv jpkk zcmo", // App password
+      },
+    });
+
+    const mailOptions = {
+      from: "www.btsmemberkim@gmail.com",
+      to: email, // Send email to the user's email
+      subject: "Registration Successful",
+      text: `Hi ${name},\n\nYour registration was successful. Welcome aboard!\n\nThank you for signing up.`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    // Redirect after successful registration and email
     return res.redirect("/");
   } catch (err) {
-    console.error('Error saving user:', err);
+    console.error("Error saving user or sending email:", err);
     res.status(500).redirect("/signup");
   }
-
 };
+
 
 exports.handleUserLogin = async (req, res) => {
   const { userid, password } = req.body;
@@ -96,7 +128,7 @@ exports.handleFormRequest = async (req, res) => {
     res.redirect(`/dashboard?riskCategory=${user.riskCategory}`)
   } catch (error) {
     console.error('Error handling form request:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server ErrorRRR' });
   }
 };
 
@@ -148,23 +180,20 @@ exports.handleRiskFormSubmission = async (req, res) => {
 
     // Check if the user exists in the database
     if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Extract the user's riskCategory from the database
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Redirect to /dashboard with the user's riskCategory as a query parameter
-    res.status(200).redirect(`/dashboard?riskCategory=${user.riskCategory}`);
-
+    res.status(200).redirect(`/dashboard?riskCategory=${riskCategory}`);
   } catch (error) {
-    console.error('Error processing form submission:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.error("Error processing form submission:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+
+
 
 exports.updateUserDashboard = async (req, res) => {
   const { riskCategory } = req.query;
@@ -205,6 +234,111 @@ exports.updateUserDashboard = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+exports.addNearMedicalCenter = async (req, res) => {
+  const { city, medicalCenter } = req.body; // Extract data from the request body
+
+  if (!city || !medicalCenter) {
+    return res.status(400).json({
+      status: 400,
+      message: "City and medical center are required fields.",
+    });
+  }
+
+  try {
+    // Check if the city exists in the database
+    let existingCity = await City.findOne({ city });
+
+    if (existingCity) {
+      // City exists, add the medical center
+      existingCity.medicalCenters.push(medicalCenter);
+      await existingCity.save();
+
+      return res.status(200).json({
+        status: 200,
+        message: "Medical center added to existing city",
+        data: existingCity,
+      });
+    } else {
+      // City doesn't exist, create a new document
+      const newCity = new City({
+        city,
+        medicalCenters: [medicalCenter],
+      });
+      await newCity.save();
+
+      return res.status(201).json({
+        status: 201,
+        message: "New city created and medical center added",
+        data: newCity,
+      });
+    }
+  } catch (err) {
+    console.error("Error in showNearMedicalCenter function:", err.message);
+    return res.status(500).json({
+      status: 500,
+      message: "Internal Server Error",
+      error: err.message,
+    });
+  }
+};
+
+exports.showNearMedicalCenter = async (req, res) => {
+  try {
+    // Fetch the userId from the session
+    const userId = req.session.userId;
+
+    if (!userId) {
+      return res.status(400).json({
+        status: 400,
+        message: "User ID is not defined in the session.",
+      });
+    }
+
+    // Fetch the user from the database using the userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        message: "User not found.",
+      });
+    }
+
+    // Extract the city from the user's data
+    const city = user.city;
+
+    if (!city) {
+      return res.status(400).json({
+        status: 400,
+        message: "City is not defined in the user's data.",
+      });
+    }
+
+    // Query the database for the city and its medical centers
+    const cityData = await City.findOne({ city });
+
+    if (!cityData) {
+      return res.status(404).render('error', {
+        message: `No data found for the city: ${city}`,
+      });
+    }
+
+    // Extract medical center details
+    const medicalCenters = cityData.medicalCenters;
+
+    // Pass the data to the frontend via res.render
+    return res.render('medicalCenters', {
+      city: cityData.city, // City name
+      medicalCenters: medicalCenters, // Array of medical centers
+    });
+  } catch (err) {
+    console.error("Error fetching medical centers:", err.message);
+    return res.status(500).render('error', {
+      message: "Internal Server Error. Please try again later.",
+    });
   }
 };
 

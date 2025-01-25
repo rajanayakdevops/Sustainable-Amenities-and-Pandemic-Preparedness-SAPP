@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Centers in <%= city %></title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .facility {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .facility h2 {
+      font-size: 2em; /* Larger font size for the hospital name */
+      margin-top: 0;
+    }
+
+    .facility p {
+      font-size: 0.9em; /* Smaller font size for other details */
+      margin-bottom: 5px;
+    }
+
+    .button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #0069d9;
+    }
+
+    .user-info {
+      margin-top: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .user-info h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Medical Centers in <%= city %></h1>
+
+  <% if (medicalCenters && medicalCenters.length > 0) { %>
+    <% medicalCenters.forEach((center, index) => { %>
+      <div class="facility">
+        <h2><%= center.name %></h2> <!-- Large font for hospital name -->
+        <p><strong>Address:</strong> <%= center.address.street %>, <%= center.address.state %>, <%= center.address.zipcode %></p>
+        <p><strong>Phone:</strong> <%= center.contact.phone %></p>
+        <p><strong>Email:</strong> <%= center.contact.email %></p>
+        <p><strong>Bed Availability:</strong> <%= center.bedAvailability %></p>
+        <button class="button">GET DIRECTIONS</button>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No medical centers found in this city.</p>
+  <% } %>
+
+ 
+
+</body>
+</html>
