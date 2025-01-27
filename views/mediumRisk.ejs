@@ -39,7 +39,7 @@
         <img src="https://img.icons8.com/fluency/48/combo-chart.png" alt="Analytics Icon">
         <h3>Real-Time Analytics</h3>
         <p>Monitor health trends and assess risks in real-time with advanced analytics tools.</p>
-        <a href="#" class="btn">Find</a>
+        <a href="/showRealDataAnalysic" class="btn">Find</a>
       </div>
       <div class="card">
         <img src="https://img.icons8.com/fluency/48/delivery.png" alt="Delivery Icon">
@@ -97,19 +97,22 @@
 
   <!-- Chatbot Button -->
    <!-- Chatbot Button -->
-   <button class="chatbot-button" onclick="toggleChatbotModal()">🤖</button>
+   <a href="/chat"><button class="chatbot-button" onclick="toggleChatbotModal()">🤖</button></a>
 
    <!-- Chatbot Modal -->
-   <div class="chatbot-modal" id="chatbotModal">
-     <header>Chatbot</header>
-     <div class="chat-content" id="chatContent">
-       <p>Welcome to the chatbot! How can I assist you?</p>
-     </div>
-     <div class="chat-input">
-       <input type="text" id="chatInput" placeholder="Type a message...">
-       <button onclick="sendMessage()">Send</button>
-     </div>
-   </div>
+   
+    <div class="chatbot-modal" id="chatbotModal">
+      <header>Chatbot</header>
+      <div class="chat-content" id="chatContent">
+        <p>Welcome to the chatbot! How can I assist you?</p>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+   
+
      <script src="/js/scrift.js"></script>
 </body>
 </html>

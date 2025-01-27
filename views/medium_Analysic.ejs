@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time City Analytics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff9e6; /* Light yellow background */
+    }
+
+    header {
+      background: linear-gradient(90deg, #fdd835, #ffb300); /* Yellow gradient */
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: white;
+      border-radius: 50% 50% 0 0;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin: 10px 0 0;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .analytics-section {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      flex: 1 1 calc(30% - 20px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      background: linear-gradient(90deg, #fbc02d, #ffeb3b); /* Light yellow gradient */
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: white;
+      border-radius: 0 0 50% 50%;
+    }
+
+    footer p {
+      margin: 10px 0 0;
+      font-size: 1rem;
+    }
+
+    footer .social-icons {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    footer .social-icons a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    footer .social-icons a:hover {
+      color: #333;
+    }
+
+    .gov-contact {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .gov-contact p {
+      margin: 5px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #fbc02d; /* Yellow button */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #f57f17; /* Darker yellow for hover */
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Real-Time City Analytics</h1>
+  <p><strong>Alert:</strong> Your city is at very high risk. Please stay informed and follow safety protocols.</p>
+</header>
+
+<div class="container">
+  <!-- User's City Highlight -->
+  <div class="city-highlight high-risk">
+    <h2>Your City: New York</h2>
+    <p>Current Condition: <strong>High Risk</strong></p>
+    <p>Infection Rate: <strong>12.5%</strong></p>
+    <p class="people-count">Population Affected: <strong>1,200,000</strong></p>
+    <button onclick="alert('Stay indoors and follow quarantine guidelines.')">View Details</button>
+  </div>
+
+  <!-- Other Cities Analytics -->
+  <h2 style="text-align: center;">Other Cities Analytics</h2>
+  <div class="analytics-section">
+    <div class="card">
+      <h3>Los Angeles</h3>
+      <p>Condition: Medium Risk</p>
+      <p>Infection Rate: 8.7%</p>
+      <p class="people-count">Population Affected: 800,000</p>
+      <button onclick="alert('Precaution tips for Los Angeles')">View Details</button>
+    </div>
+    <div class="card">
+      <h3>Chicago</h3>
+      <p>Condition: Low Risk</p>
+      <p>Infection Rate: 2.3%</p>
+      <p class="people-count">Population Affected: 300,000</p>
+      <button onclick="alert('Precaution tips for Chicago')">View Details</button>
+    </div>
+    <div class="card">
+      <h3>Houston</h3>
+      <p>Condition: High Risk</p>
+      <p>Infection Rate: 10.2%</p>
+      <p class="people-count">Population Affected: 600,000</p>
+      <button onclick="alert('Stay indoors and follow quarantine guidelines for Houston.')">View Details</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Real-Time City Analytics. All rights reserved.</p>
+  
+  <div class="gov-contact">
+    <p><strong>Emergency Contact Numbers:</strong></p>
+    <p>Health Department: <a href="tel:123-456-7890" style="color: white;">123-456-7890</a></p>
+    <p>COVID-19 Helpline: <a href="tel:987-654-3210" style="color: white;">987-654-3210</a></p>
+    <p>Email: <a href="mailto:help@healthgov.org" style="color: white;">help@healthgov.org</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

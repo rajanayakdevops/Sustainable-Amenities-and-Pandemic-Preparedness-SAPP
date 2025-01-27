@@ -28,6 +28,10 @@ userRouter.get('/add-medical-center',(req,res)=>{
   return res.render("medicalCenterForm");
 });
 userRouter.get('/show-medical-center',userController.showNearMedicalCenter);
+userRouter.get('/showRealDataAnalysic',userController.showRealDataAnalysic);
+userRouter.get('/chat',(req,res)=>{
+  return res.render("chatBoat");
+});
 
 
 

@@ -342,4 +342,38 @@ exports.showNearMedicalCenter = async (req, res) => {
   }
 };
 
+exports.showRealDataAnalysic = async (req, res) => {
+  try {
+    // Get the userId from the session
+    const userId = req.session.userId;
+
+    // Fetch the user from the database using the session userId
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Get the riskCategory from the user's session
+    const riskCategoryNumber = user.riskCategory;
+
+    // Render the appropriate dashboard page based on the riskCategory
+    switch (riskCategoryNumber) {
+      case 1:
+        return res.render('low_Analysic', { user });
+      case 2:
+        return res.render('medium_Analysic', { user });
+      case 3:
+        return res.render('high_Analysic', { user });
+      default:
+        return res.status(400).json({ error: 'Invalid risk category' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
 
