@@ -59,4 +59,5 @@ mongoose.connect(mongoURI, {
 
 app.listen(8000,()=>{
   console.log("server started at port 8000");
+  // use node server.js to run this project.
 })
